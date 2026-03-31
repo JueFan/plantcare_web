@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantCare - Botanist in Your Pocket</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="PlantCare is an AI-powered plant identifier and care management app. Instantly identify plants, get disease diagnosis, and dynamic care tasks.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        plant: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: '#0f172a'
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .blob-1 {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            background: #dcfce7;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .blob-2 {
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: #fef08a;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .phone-mockup {
+            border: 12px solid #1e293b;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            background: #fff;
+        }
+        
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #1e293b;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(22, 163, 74, 0.15);
+            border-color: #86efac;
+        }
+        
+        .testimonial-card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 antialiased selection:bg-plant-200 selection:text-plant-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <div class="w-10 h-10 bg-plant-600 rounded-xl flex items-center justify-center shadow-lg shadow-plant-500/30">
+                        <i class="fa-solid fa-leaf text-white text-xl"></i>
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight text-dark">PlantCare</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
+                    <a href="#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
+                    <a href="#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="#download" class="bg-dark hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-medium transition-all transform hover:scale-105 shadow-md">
+                        Download App
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-slate-600 hover:text-dark focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                
+                <!-- Hero Content -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-plant-500"></span>
+                        <span class="text-sm font-semibold text-slate-700">AI-Powered Botanical Assistant</span>
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-7xl font-extrabold text-dark leading-tight mb-6 tracking-tight">
+                        Botanist in Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-plant-500 to-plant-700">Pocket.</span>
+                    </h1>
+                    
+                    <p class="text-lg lg:text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Identify plants instantly, diagnose diseases, and get personalized care tasks. Keep your indoor garden thriving with smart AI technology.
+                    </p>
+                    
+                    <!-- Stats -->
+                    <div class="flex flex-wrap justify-center lg:justify-start items-center gap-6 mb-10">
+                        <div class="flex items-center gap-2">
+                            <div class="flex -space-x-2">
+                                <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="User">
+                                <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=2" alt="User">
+                                <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=3" alt="User">
+                            </div>
+                            <div class="flex flex-col pl-2">
+                                <div class="flex text-yellow-400 text-sm">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="text-sm font-bold text-dark">1.2M+ Reviews</span>
+                            </div>
+                        </div>
+                        <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-bold text-dark">100M+</span>
+                            <span class="text-sm text-slate-500 font-medium">Downloads</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Download Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" id="download">
+                        <a href="#" class="flex items-center justify-center gap-3 bg-dark text-white px-6 py-3 rounded-xl hover:bg-slate-800 transition-transform transform hover:-translate-y-1">
+                            <i class="fa-brands fa-apple text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-[10px] leading-none text-slate-300">Download on the</div>
+                                <div class="text-lg font-bold leading-none mt-1">App Store</div>
+                            </div>
+                        </a>
+                        <a href="#" class="flex items-center justify-center gap-3 bg-white text-dark border border-slate-200 px-6 py-3 rounded-xl hover:bg-slate-50 transition-transform transform hover:-translate-y-1 shadow-sm">
+                            <i class="fa-brands fa-google-play text-2xl text-plant-600"></i>
+                            <div class="text-left">
+                                <div class="text-[10px] leading-none text-slate-500">GET IT ON</div>
+                                <div class="text-lg font-bold leading-none mt-1">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image / Mockup -->
+                <div class="relative mx-auto w-full max-w-[320px] lg:max-w-[360px] pt-10 lg:pt-0">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-plant-400 to-plant-200 rounded-[50px] transform rotate-3 scale-105 opacity-50 blur-lg"></div>
+                    <div class="phone-mockup aspect-[9/19.5] w-full bg-slate-100 flex flex-col relative z-10">
+                        <div class="phone-notch"></div>
+                        <!-- Mockup UI Content -->
+                        <div class="flex-1 bg-slate-50 pt-12 px-5 pb-6 flex flex-col relative overflow-hidden">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <h3 class="font-black text-2xl text-slate-800">PlantCare</h3>
+                                    <p class="text-xs text-slate-400 font-bold mt-1">Build your indoor forest</p>
+                                </div>
+                                <div class="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center relative">
+                                    <i class="fa-solid fa-bell text-slate-700"></i>
+                                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                                </div>
+                            </div>
+                            
+                            <!-- Weather Card -->
+                            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 mb-6 flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 text-xl">
+                                    <i class="fa-solid fa-cloud-sun"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800">24°C • Sunny</div>
+                                    <div class="text-xs text-slate-500 mt-1">Perfect day for watering</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Task Card -->
+                            <div class="bg-plant-50 rounded-2xl p-5 border border-plant-100 mb-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="text-sm font-bold text-plant-700">To-do Tasks</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
+                                        <i class="fa-solid fa-droplet"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-slate-800">Water Monstera</div>
+                                        <div class="text-xs text-slate-500">Soil is completely dry</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Plants Grid -->
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="font-bold text-slate-800 text-lg">My Garden</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+                                    <div class="w-full h-24 bg-slate-200 rounded-lg mb-2 overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="Plant">
+                                    </div>
+                                    <div class="font-bold text-sm text-slate-800">Monstera</div>
+                                    <div class="text-xs text-plant-600 font-semibold mt-1">92% Health</div>
+                                </div>
+                                <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+                                    <div class="w-full h-24 bg-slate-200 rounded-lg mb-2 overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="Plant">
+                                    </div>
+                                    <div class="font-bold text-sm text-slate-800">Snake Plant</div>
+                                    <div class="text-xs text-plant-600 font-semibold mt-1">88% Health</div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAB -->
+                            <div class="absolute bottom-6 right-6 w-14 h-14 bg-plant-600 rounded-full shadow-lg shadow-plant-500/40 flex items-center justify-center text-white text-xl">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-plant-600 tracking-wider uppercase mb-3">Core Features</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-dark mb-4">Discover 4 Intriguing Reasons to Choose PlantCare</h3>
+                <p class="text-slate-600 text-lg">Everything you need to become a successful plant parent, powered by cutting-edge AI technology.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-slate-50 border border-slate-100 p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-plant-600 text-2xl mb-6">
+                        <i class="fa-solid fa-camera-viewfinder"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3">Instantly identify plants with a snap</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Encountered an unknown plant? Just take a photo. Our advanced AI instantly identifies thousands of plant species with 98% accuracy.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-slate-50 border border-slate-100 p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-red-500 text-2xl mb-6">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3">Plant disease auto-diagnose</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Yellow leaves? Brown spots? Snap a picture of the problem area to get an instant diagnosis and a step-by-step treatment plan.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-slate-50 border border-slate-100 p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-blue-500 text-2xl mb-6">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3">Dynamic Care Engine</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Never forget to water again. Get personalized tasks (watering, fertilizing, pruning) automatically adjusted based on local weather and seasons.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-slate-50 border border-slate-100 p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-amber-500 text-2xl mb-6">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark mb-3">Growth Journal & Encyclopedia</h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Track your plant's milestones with photos and notes. Access a vast encyclopedia of care tips, toxicity warnings, and ideal environments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Stories Section -->
+    <section id="stories" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-plant-600 tracking-wider uppercase mb-3">User Stories</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-dark mb-4">See how users are solving plant problems</h3>
+                <p class="text-slate-600 text-lg">Join millions of happy plant parents who transformed their indoor gardens.</p>
+            </div>
+            
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                <!-- Story 1 -->
+                <div class="testimonial-card bg-white p-6 rounded-2xl shadow-soft border border-slate-100">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed italic">"This app is fantastic at identifying plants, even in low-light conditions, and provides detailed information. After using it regularly for months, I've found it to be correct 99% of the time."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Emily" class="w-10 h-10 rounded-full">
+                        <div>
+                            <div class="font-bold text-dark text-sm">Emily</div>
+                            <div class="text-xs text-slate-500">Plant Enthusiast</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Story 2 -->
+                <div class="testimonial-card bg-white p-6 rounded-2xl shadow-soft border border-slate-100">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed italic">"I've been using this app for 2-3 years and it has become an essential part of my daily life. With just a photo, it instantly identifies any unfamiliar plants in my yard or at stores. It has helped me choose the right plants and assess their health."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="James" class="w-10 h-10 rounded-full">
+                        <div>
+                            <div class="font-bold text-dark text-sm">James</div>
+                            <div class="text-xs text-slate-500">Home Gardener</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Story 3 -->
+                <div class="testimonial-card bg-white p-6 rounded-2xl shadow-soft border border-slate-100">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed italic">"As a plant lover, I often feel overwhelmed and unsure about plant care. After struggling for years, this app has made me a successful plant owner. The Dynamic Care Engine tells me exactly when to water based on my local weather!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/150?img=68" alt="Alexander" class="w-10 h-10 rounded-full">
+                        <div>
+                            <div class="font-bold text-dark text-sm">Alexander</div>
+                            <div class="text-xs text-slate-500">Urban Botanist</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Story 4 -->
+                <div class="testimonial-card bg-white p-6 rounded-2xl shadow-soft border border-slate-100">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed italic">"This app is amazing! It's an easy and helpful tool for identifying trees, their care, and invasive insects that can cause damage. It saved a mature oak tree from destruction near my home."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="Liam" class="w-10 h-10 rounded-full">
+                        <div>
+                            <div class="font-bold text-dark text-sm">Liam</div>
+                            <div class="text-xs text-slate-500">Nature Explorer</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Story 5 -->
+                <div class="testimonial-card bg-white p-6 rounded-2xl shadow-soft border border-slate-100">
+                    <div class="flex text-yellow-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed italic">"As an avid gardener, I rely on PlantCare for plant identification. It consistently provides accurate results, even in crowded photos. The app's organization features help me categorize plants in my expanding gardens."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/150?img=44" alt="Sophia" class="w-10 h-10 rounded-full">
+                        <div>
+                            <div class="font-bold text-dark text-sm">Sophia</div>
+                            <div class="text-xs text-slate-500">Avid Gardener</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-plant-600 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to transform your plant care routine?</h2>
+            <p class="text-plant-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto">Download PlantCare today and join millions of users keeping their plants happy and healthy.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="flex items-center justify-center gap-3 bg-dark text-white px-8 py-4 rounded-xl hover:bg-slate-800 transition-transform transform hover:-translate-y-1">
+                    <i class="fa-brands fa-apple text-2xl"></i>
+                    <div class="text-left">
+                        <div class="text-[10px] leading-none text-slate-300">Download on the</div>
+                        <div class="text-lg font-bold leading-none mt-1">App Store</div>
+                    </div>
+                </a>
+                <a href="#" class="flex items-center justify-center gap-3 bg-white text-dark px-8 py-4 rounded-xl hover:bg-slate-50 transition-transform transform hover:-translate-y-1">
+                    <i class="fa-brands fa-google-play text-2xl text-plant-600"></i>
+                    <div class="text-left">
+                        <div class="text-[10px] leading-none text-slate-500">GET IT ON</div>
+                        <div class="text-lg font-bold leading-none mt-1">Google Play</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-slate-300 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-plant-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-leaf text-white text-sm"></i>
+                        </div>
+                        <span class="font-bold text-xl text-white tracking-tight">PlantCare</span>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-sm mb-6">
+                        Your ultimate AI botanical assistant. Identify plants, diagnose diseases, and become a better plant parent.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">API</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Reviews</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-plant-400 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-slate-800 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 PlantCare App. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed with <i class="fa-solid fa-heart text-red-500 mx-1"></i> for plant lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script for sticky nav -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('py-0', 'py-1');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('py-1', 'py-0');
+            }
+        });
+    </script>
+</body>
+</html>
