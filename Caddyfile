@@ -1,0 +1,4 @@
+api.juefan.top {
+    # 将请求转发给 Docker 内部网络中的 website-app 容器
+    reverse_proxy website-app:3001
+}

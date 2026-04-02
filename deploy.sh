@@ -39,7 +39,7 @@ rsync -avz --progress \
     --exclude 'node_modules' \
     --exclude '.git' \
     --exclude '.DS_Store' \
-    ./server.js ./package.json ./Dockerfile ./docker-compose.yml ./.env ./init_db.sql \
+    ./server.js ./package.json ./Dockerfile ./docker-compose.yml ./.env ./init_db.sql ./Caddyfile \
     ${SERVER_USER}@${SERVER_IP}:${SERVER_DIR}/
 
 echo "✅ 文件上传完成"
@@ -51,11 +51,10 @@ ssh ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && docker-compose down && dock
 echo ""
 echo "🎉 部署已全部完成！"
 echo "--------------------------------------------------------"
-echo "👉 你的后端 API 现在运行在: http://${SERVER_IP}:3001/api/v1"
+echo "👉 你的后端 API 现在运行在: https://api.juefan.top/api/v1"
 echo ""
 echo "⚠️ 下一步操作："
-echo "1. 打开本地的 website/config.js 文件"
-echo "2. 将 API_BASE_URL 替换为: 'http://${SERVER_IP}:3001/api/v1'"
-echo "3. 运行 'git add . && git commit -m \"update api config\" && git push origin main'"
-echo "4. 等待 GitHub Pages 刷新后，你的网站就能请求真实服务器数据了！"
+echo "1. 确保你的域名 api.juefan.top 已解析到服务器 IP: ${SERVER_IP}"
+echo "2. 运行 'git push origin main' 将 config.js 更新推送到 GitHub"
+echo "3. 等待 GitHub Pages 刷新后，你的网站就能通过 HTTPS 请求真实服务器数据了！"
 echo "--------------------------------------------------------"
