@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PlantCare - Details</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="PlantCare is an AI-powered plant identifier and care management app. Instantly identify plants, get disease diagnosis, and dynamic care tasks.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        plant: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: '#0f172a'
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 antialiased selection:bg-plant-200 selection:text-plant-900 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300 py-1">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='/index.html'">
+                    <div class="w-10 h-10 bg-plant-600 rounded-xl flex items-center justify-center shadow-lg shadow-plant-500/30">
+                        <i class="fa-solid fa-leaf text-white text-xl"></i>
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight text-dark hidden sm:block">PlantCare</span>
+                </div>
+                
+                <!-- Desktop Menu & Search -->
+                <div class="hidden md:flex items-center flex-1 justify-between px-8">
+                    <div class="flex space-x-8">
+                        <a href="/index.html#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
+                        <a href="/index.html#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
+                        <a href="/index.html#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
+                    </div>
+                    
+                    <!-- Top Search Bar -->
+                    <div class="relative w-72">
+                        <button id="topSearchBtn" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-plant-600 transition-colors z-10">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </button>
+                        <input type="text" id="topSearchInput" 
+                            class="w-full bg-white border border-slate-200 focus:border-plant-500 focus:ring-2 focus:ring-plant-500/20 rounded-full py-2 pl-10 pr-4 text-sm transition-all outline-none placeholder:text-slate-400"
+                            placeholder="Search Plants" autocomplete="off">
+                    </div>
+                </div>
+                
+                <!-- Right Side Actions -->
+                <div class="flex items-center gap-4">
+                    <button class="text-slate-600 hover:text-red-500 transition-colors p-2 md:p-0">
+                        <i data-lucide="heart" class="w-6 h-6"></i>
+                    </button>
+                    <!-- CTA Button -->
+                    <div class="hidden md:flex items-center">
+                        <a href="/index.html#download" class="bg-dark hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-medium transition-all transform hover:scale-105 shadow-md">
+                            Download App
+                        </a>
+                    </div>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button class="text-slate-600 hover:text-dark focus:outline-none p-2">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="pt-28 p-4 space-y-4 max-w-7xl mx-auto">
+        <div class="w-full h-64 bg-slate-200 rounded-xl animate-pulse"></div>
+        <div class="h-8 w-3/4 bg-slate-200 rounded animate-pulse"></div>
+        <div class="h-4 w-1/2 bg-slate-200 rounded animate-pulse"></div>
+        <div class="grid grid-cols-3 gap-3 mt-6">
+            <div class="h-20 bg-slate-200 rounded-xl animate-pulse"></div>
+            <div class="h-20 bg-slate-200 rounded-xl animate-pulse"></div>
+            <div class="h-20 bg-slate-200 rounded-xl animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="hidden pt-40 flex flex-col items-center justify-center text-center px-4 max-w-7xl mx-auto">
+        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4 text-red-400">
+            <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        </div>
+        <h3 class="text-slate-800 font-medium mb-1">未找到该植物</h3>
+        <p class="text-sm text-slate-500 mb-6">可能数据已被移除或链接错误</p>
+        <button onclick="window.location.href='/search.html'" class="px-6 py-2 bg-plant-600 text-white rounded-full text-sm font-medium hover:bg-plant-700 transition-colors">返回搜索</button>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="hidden pt-24 pb-20 max-w-7xl mx-auto">
+        
+        <!-- Hero Header -->
+        <div class="relative w-full aspect-[4/3] bg-slate-100 sm:aspect-[16/9] md:aspect-[21/9]">
+            <img id="heroImage" src="" alt="植物图片" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-4 text-white w-full">
+                <h2 id="commonName" class="text-2xl font-bold mb-1 shadow-sm">--</h2>
+                <p id="botanicalName" class="text-sm text-white/90 italic mb-2">--</p>
+                <div class="flex flex-wrap gap-2" id="heroTags">
+                    <!-- Tags will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Container -->
+        <div class="p-4 space-y-6">
+            
+            <!-- Intro / Description -->
+            <section id="introSection" class="hidden">
+                <p id="introText" class="text-sm text-slate-600 leading-relaxed text-justify"></p>
+            </section>
+
+            <!-- Quick Facts Grid -->
+            <section>
+                <h3 class="text-lg font-semibold text-slate-800 mb-3">基本档案</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="quickFactsGrid">
+                    <!-- Facts will be injected here -->
+                </div>
+            </section>
+
+            <!-- Care Guide -->
+            <section>
+                <h3 class="text-lg font-semibold text-slate-800 mb-3">养护指南</h3>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 divide-y divide-slate-100" id="careGuideList">
+                    <!-- Care items will be injected here -->
+                </div>
+            </section>
+
+            <!-- Additional Info -->
+            <section id="additionalInfoSection" class="hidden">
+                <h3 class="text-lg font-semibold text-slate-800 mb-3">科普与特性</h3>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4 space-y-4" id="additionalInfoList">
+                    <!-- Info items will be injected here -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="/config.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Sticky Nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('py-1', 'py-0');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('py-0', 'py-1');
+            }
+        });
+
+        // 顶部搜索逻辑
+        const topSearchInput = document.getElementById('topSearchInput');
+        const topSearchBtn = document.getElementById('topSearchBtn');
+
+        function triggerSearch() {
+            const val = topSearchInput.value.trim();
+            if (val) {
+                window.location.href = `/search.html?q=${encodeURIComponent(val)}`;
+            }
+        }
+
+        if (topSearchInput) {
+            topSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    triggerSearch();
+                    topSearchInput.blur();
+                }
+            });
+        }
+
+        if (topSearchBtn) {
+            topSearchBtn.addEventListener('click', triggerSearch);
+        }
+
+        // Get ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const plantId = urlParams.get('id');
+
+        // DOM Elements
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const mainContent = document.getElementById('mainContent');
+
+        if (!plantId) {
+            showError();
+        } else {
+            fetchPlantDetail(plantId);
+        }
+
+        async function fetchPlantDetail(id) {
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/plants/${id}`);
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    renderPlant(data.data);
+                } else {
+                    showError();
+                }
+            } catch (error) {
+                console.error('Failed to fetch plant detail:', error);
+                showError();
+            }
+        }
+
+        function showError() {
+            loadingState.classList.add('hidden');
+            errorState.classList.remove('hidden');
+        }
+
+        function safeParseJSON(str) {
+            if (!str) return '';
+            try {
+                const parsed = JSON.parse(str);
+                return Array.isArray(parsed) ? parsed.join(', ') : parsed;
+            } catch (e) {
+                return str;
+            }
+        }
+
+        function renderPlant(plant) {
+            // Hide loading, show content
+            loadingState.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+
+            // 1. Hero Header
+            const title = plant.common_name || plant.botanical_name || '未知植物';
+            document.getElementById('commonName').textContent = title;
+            document.getElementById('botanicalName').textContent = plant.botanical_name || plant.family || '';
+            
+            let imgUrl = plant.image;
+            if (!imgUrl || imgUrl === 'NULL' || imgUrl === '') {
+                imgUrl = 'https://via.placeholder.com/800x600/e2e8f0/94a3b8?text=No+Image';
+            }
+            document.getElementById('heroImage').src = imgUrl;
+
+            // Tags
+            const heroTags = document.getElementById('heroTags');
+            let tagsHtml = '';
+            if (plant.low_maintenance) tagsHtml += `<span class="px-2 py-1 bg-white/20 backdrop-blur-md rounded-md text-xs border border-white/30">🛡️ 低维护</span>`;
+            if (plant.drought_resistance) tagsHtml += `<span class="px-2 py-1 bg-white/20 backdrop-blur-md rounded-md text-xs border border-white/30">🐪 抗旱</span>`;
+            heroTags.innerHTML = tagsHtml;
+
+            // 2. Intro
+            const introText = plant.entity_description || plant.cultivation;
+            if (introText) {
+                document.getElementById('introSection').classList.remove('hidden');
+                document.getElementById('introText').textContent = introText;
+            }
+
+            // 3. Quick Facts (Basic attributes)
+            const factsGrid = document.getElementById('quickFactsGrid');
+            const facts = [
+                { icon: 'leaf', label: '植物类型', value: safeParseJSON(plant.plant_type) },
+                { icon: 'sun', label: '叶片特征', value: safeParseJSON(plant.foliage) },
+                { icon: 'trees', label: '植物习性', value: safeParseJSON(plant.habit) },
+                { icon: 'flower-2', label: '观赏季节', value: safeParseJSON(plant.season_of_interest) },
+                { icon: 'palette', label: '季节颜色', value: safeParseJSON(plant.colour_with_attributes) },
+                { icon: 'ruler', label: '株高', value: safeParseJSON(plant.height) },
+                { icon: 'expand', label: '展幅', value: safeParseJSON(plant.spread) },
+                { icon: 'clock', label: '长至成株时间', value: safeParseJSON(plant.time_to_full_height) },
+                { icon: 'wind', label: '风害遮蔽', value: safeParseJSON(plant.exposure) },
+                { icon: 'compass', label: '种植方位', value: safeParseJSON(plant.aspect) },
+            ].filter(f => f.value && f.value !== 'No preference' && f.value !== 'NULL');
+
+            factsGrid.innerHTML = facts.map(f => `
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-1">
+                    <div class="text-slate-400 mb-1"><i data-lucide="${f.icon}" class="w-5 h-5"></i></div>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider">${f.label}</span>
+                    <span class="text-sm font-medium text-slate-800 leading-tight">${f.value}</span>
+                </div>
+            `).join('');
+
+            // 4. Care Guide
+            const careList = document.getElementById('careGuideList');
+            const careItems = [
+                { icon: 'droplets', color: 'text-blue-500', bg: 'bg-blue-50', label: '水分需求', value: safeParseJSON(plant.moisture) },
+                { icon: 'sun-dim', color: 'text-orange-500', bg: 'bg-orange-50', label: '光照偏好', value: safeParseJSON(plant.sunlight) },
+                { icon: 'thermometer-snowflake', color: 'text-cyan-500', bg: 'bg-cyan-50', label: '耐寒等级', value: plant.hardiness_level },
+                { icon: 'mountain-snow', color: 'text-amber-600', bg: 'bg-amber-50', label: '土壤要求', value: `${safeParseJSON(plant.soil_type)} ${plant.ph && plant.ph !== 'NULL' ? `(pH: ${safeParseJSON(plant.ph)})` : ''}` },
+                { icon: 'scissors', color: 'text-slate-500', bg: 'bg-slate-100', label: '修剪说明', value: plant.pruning },
+                { icon: 'sprout', color: 'text-emerald-500', bg: 'bg-emerald-50', label: '繁殖方式', value: plant.propagation },
+                { icon: 'map-pin', color: 'text-indigo-500', bg: 'bg-indigo-50', label: '推荐种植位置', value: safeParseJSON(plant.planting_places) }
+            ].filter(f => f.value && f.value !== 'No preference' && f.value !== 'NULL');
+
+            careList.innerHTML = careItems.map(item => `
+                <div class="p-4 flex gap-4">
+                    <div class="w-10 h-10 rounded-full ${item.bg} flex items-center justify-center shrink-0">
+                        <i data-lucide="${item.icon}" class="w-5 h-5 ${item.color}"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-slate-800 mb-1">${item.label}</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">${item.value}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // 5. Additional Info
+            const addInfoList = document.getElementById('additionalInfoList');
+            const infoItems = [
+                { label: '其他俗名', value: safeParseJSON(plant.common_names) },
+                { label: '产地分布', value: plant.range },
+                { label: '是否原生', value: plant.native === 1 ? '是 (原生种)' : null },
+                { label: '属描述', value: plant.genus_description },
+                { label: '栽培群描述', value: plant.hort_group_description },
+                { label: '香味部位', value: safeParseJSON(plant.fragrance) },
+                { label: '是否为蜜源植物', value: plant.for_pollinators === 1 ? '是' : null },
+                { label: 'AGM 显异奖', value: plant.agm_award === 1 ? '荣获皇家园艺学会 AGM 奖项' : null },
+                { label: '园林用途', value: safeParseJSON(plant.suggested_plant_uses) },
+                { label: '病害抗性', value: plant.disease_resistance },
+                { label: '虫害抗性', value: plant.pest_resistance },
+                { label: '毒性说明', value: plant.toxicity }
+            ].filter(f => f.value && f.value !== 'NULL');
+
+            if (infoItems.length > 0) {
+                document.getElementById('additionalInfoSection').classList.remove('hidden');
+                addInfoList.innerHTML = infoItems.map(item => `
+                    <div>
+                        <span class="text-xs text-slate-500 block mb-1">${item.label}</span>
+                        <span class="text-sm text-slate-800">${item.value}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Re-init icons
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

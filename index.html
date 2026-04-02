@@ -10,6 +10,8 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,11 +143,23 @@
                     <span class="font-bold text-2xl tracking-tight text-dark">PlantCare</span>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
-                    <a href="#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
-                    <a href="#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
+                <!-- Desktop Menu & Search -->
+                <div class="hidden md:flex items-center flex-1 justify-between px-8">
+                    <div class="flex space-x-8">
+                        <a href="#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
+                        <a href="#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
+                        <a href="#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
+                    </div>
+                    
+                    <!-- Top Search Bar -->
+                    <div class="relative w-72">
+                        <button id="topSearchBtn" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-plant-600 transition-colors z-10">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </button>
+                        <input type="text" id="topSearchInput" 
+                            class="w-full bg-white border border-slate-200 focus:border-plant-500 focus:ring-2 focus:ring-plant-500/20 rounded-full py-2 pl-10 pr-4 text-sm transition-all outline-none placeholder:text-slate-400"
+                            placeholder="Search Plants" autocomplete="off">
+                    </div>
                 </div>
                 
                 <!-- CTA Button -->
@@ -531,8 +545,12 @@
         </div>
     </footer>
 
-    <!-- Script for sticky nav -->
+    <!-- Script for sticky nav and search redirect -->
     <script>
+        // 初始化 Lucide 图标
+        lucide.createIcons();
+
+        // Sticky Nav
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
             if (window.scrollY > 20) {
@@ -543,6 +561,30 @@
                 nav.classList.replace('py-1', 'py-0');
             }
         });
+
+        // 顶部搜索逻辑
+        const topSearchInput = document.getElementById('topSearchInput');
+        const topSearchBtn = document.getElementById('topSearchBtn');
+
+        function triggerSearch() {
+            const val = topSearchInput.value.trim();
+            if (val) {
+                window.location.href = `/search.html?q=${encodeURIComponent(val)}`;
+            }
+        }
+
+        if (topSearchInput) {
+            topSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    triggerSearch();
+                    topSearchInput.blur();
+                }
+            });
+        }
+
+        if (topSearchBtn) {
+            topSearchBtn.addEventListener('click', triggerSearch);
+        }
     </script>
 </body>
 </html>
