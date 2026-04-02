@@ -9,21 +9,28 @@
 SERVER_USER="ubuntu"               # 你的服务器 SSH 用户名
 SERVER_IP="43.156.136.229"        # 你的服务器公网 IP 地址或域名
 SERVER_DIR="/home/ubuntu/plantcare_web"        # 服务器上存放项目代码的路径
+# SSH_PASSWORD 最好通过环境变量传入，不要直接写在代码里
+SSH_PASSWORD="${SSH_PASSWORD:-}"
 # ----------------------------
 
 # 退出遇到错误
 set -e
 
+if [ -z "$SSH_PASSWORD" ]; then
+    echo "❌ 请设置 SSH_PASSWORD 环境变量，例如: SSH_PASSWORD='your_password' ./deploy.sh"
+    exit 1
+fi
+
 echo "🚀 开始自动化部署流程..."
 
 # 1. 检查 SSH 连接并创建目录
 echo "🔌 正在测试 SSH 连接并在服务器上创建部署目录..."
-sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "mkdir -p ${SERVER_DIR}"
+sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "mkdir -p ${SERVER_DIR}"
 echo "✅ 目录创建成功: ${SERVER_DIR}"
 
 # 2. 上传文件到服务器 (通过 rsync 增量同步)
 echo "⬆️  正在上传项目文件到服务器..."
-sshpass -p '***REMOVED***' rsync -avz --progress \
+sshpass -p "${SSH_PASSWORD}" rsync -avz --progress \
     --exclude 'node_modules' \
     --exclude '.git' \
     --exclude '.DS_Store' \
@@ -34,7 +41,7 @@ echo "✅ 文件上传完成"
 
 # 3. 在服务器上启动 Docker
 echo "🐳 正在服务器上拉起 Docker 容器..."
-sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && sudo docker-compose down && sudo docker-compose up -d --build"
+sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && sudo docker-compose down && sudo docker-compose up -d --build"
 
 echo ""
 echo "🎉 部署已全部完成！"

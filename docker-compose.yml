@@ -18,7 +18,7 @@ services:
       - DB_HOST=plantsync-db
       - DB_PORT=3306
       - DB_USER=root
-      - DB_PASSWORD=${DB_PASSWORD:-***REMOVED***}
+      - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=rhs_data
     restart: always
     # 加入主项目的网络，以便能解析 plantsync-db 容器名
