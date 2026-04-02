@@ -40,24 +40,6 @@ services:
       - plantcare_website_mysql_data:/var/lib/mysql
     restart: always
 
-  # 独立的 Caddy 服务提供全自动 HTTPS (Let's Encrypt)
-  website-caddy:
-    image: caddy:2-alpine
-    container_name: plantcare-website-caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - plantcare_website_caddy_data:/data
-      - plantcare_website_caddy_config:/config
-    depends_on:
-      - website-app
-
 volumes:
   # 显式声明独立卷名，与主项目的 plantsync_mysql_data 隔离
   plantcare_website_mysql_data:
-  plantcare_website_caddy_data:
-  plantcare_website_caddy_config:

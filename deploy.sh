@@ -39,7 +39,7 @@ rsync -avz --progress \
     --exclude 'node_modules' \
     --exclude '.git' \
     --exclude '.DS_Store' \
-    ./server.js ./package.json ./Dockerfile ./docker-compose.yml ./.env ./init_db.sql ./Caddyfile \
+    ./server.js ./package.json ./Dockerfile ./docker-compose.yml ./.env ./init_db.sql \
     ${SERVER_USER}@${SERVER_IP}:${SERVER_DIR}/
 
 echo "✅ 文件上传完成"

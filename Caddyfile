@@ -1,9 +1,0 @@
-juefan.top {
-    # 处理 /plantsync_web 路径下的请求
-    handle_path /plantsync_web/* {
-        # 将请求转发给 Docker 内部网络中的 website-app 容器
-        # handle_path 会自动剥离 /plantsync_web 前缀
-        # 所以前端请求 /plantsync_web/api/v1/search 会被转发为 /api/v1/search
-        reverse_proxy website-app:3001
-    }
-}
