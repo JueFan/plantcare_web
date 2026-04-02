@@ -82,7 +82,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='/index.html'">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='./index.html'">
                     <div class="w-10 h-10 bg-plant-600 rounded-xl flex items-center justify-center shadow-lg shadow-plant-500/30">
                         <i class="fa-solid fa-leaf text-white text-xl"></i>
                     </div>
@@ -92,9 +92,9 @@
                 <!-- Desktop Menu & Search -->
                 <div class="hidden md:flex items-center flex-1 justify-between px-8">
                     <div class="flex space-x-8">
-                        <a href="/index.html#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
-                        <a href="/index.html#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
-                        <a href="/index.html#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
+                        <a href="./index.html#features" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">Features</a>
+                        <a href="./index.html#stories" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">User Stories</a>
+                        <a href="./index.html#faq" class="text-slate-600 hover:text-plant-600 font-medium transition-colors">FAQ</a>
                     </div>
                     
                     <!-- Top Search Bar -->
@@ -114,7 +114,7 @@
                 
                 <!-- CTA Button -->
                 <div class="hidden md:flex items-center">
-                    <a href="/index.html#download" class="bg-dark hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-medium transition-all transform hover:scale-105 shadow-md">
+                    <a href="./index.html#download" class="bg-dark hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-medium transition-all transform hover:scale-105 shadow-md">
                         Download App
                     </a>
                 </div>
@@ -204,7 +204,7 @@
         </div>
     </main>
 
-    <script src="/config.js"></script>
+    <script src="./config.js"></script>
     <script>
         // 初始化 Lucide 图标
         lucide.createIcons();
@@ -469,7 +469,7 @@
                 const subTitle = plant.common_name ? plant.botanical_name : plant.family;
 
                 return `
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow cursor-pointer flex flex-col group" onclick="window.location.href='/plant.html?id=${plant.id}'">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow cursor-pointer flex flex-col group" onclick="window.location.href='./plant.html?id=${plant.id}'">
                         <div class="relative w-full aspect-[4/5] bg-slate-100 overflow-hidden">
                             <img src="${imgUrl}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://via.placeholder.com/300x400/e2e8f0/94a3b8?text=Image+Error'">
                             <!-- 收藏按钮 -->
