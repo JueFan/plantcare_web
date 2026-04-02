@@ -8,7 +8,7 @@
 # --- 请修改以下服务器信息 ---
 SERVER_USER="ubuntu"               # 你的服务器 SSH 用户名
 SERVER_IP="43.156.136.229"        # 你的服务器公网 IP 地址或域名
-SERVER_DIR="/home/ubuntu/website"        # 服务器上存放项目代码的路径
+SERVER_DIR="/home/ubuntu/plantcare_web"        # 服务器上存放项目代码的路径
 # ----------------------------
 
 # 退出遇到错误
@@ -34,7 +34,7 @@ echo "✅ 文件上传完成"
 
 # 3. 在服务器上启动 Docker
 echo "🐳 正在服务器上拉起 Docker 容器..."
-sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && docker-compose down && docker-compose up -d --build"
+sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && sudo docker-compose down && sudo docker-compose up -d --build"
 
 echo ""
 echo "🎉 部署已全部完成！"
