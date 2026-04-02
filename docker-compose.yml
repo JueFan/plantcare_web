@@ -1,0 +1,44 @@
+version: '3.8'
+name: plantcare-website # 显式项目名，防止与主项目 plantsync 冲突
+
+services:
+  # 官网后端 API 服务
+  website-app:
+    build: .
+    container_name: plantcare-website-backend
+    ports:
+      # 主项目使用了 9527，这里我们使用 3001
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      # 默认连接到新起的 website 数据库
+      - DB_HOST=website-db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=${DB_PASSWORD:-***REMOVED***}
+      - DB_NAME=rhs_data
+    depends_on:
+      - website-db
+    restart: always
+
+  # 官网独立的 MySQL 数据库
+  website-db:
+    image: mysql:8.0
+    container_name: plantcare-website-db
+    ports:
+      # 主项目使用了 3307，OutfitSwap 可能是 3306，这里我们使用 3308 避免冲突
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-***REMOVED***}
+      - MYSQL_DATABASE=rhs_data
+    volumes:
+      # 如果有初始化脚本可以放在 scripts 目录下，这里先留空，或配置初始化
+      - plantcare_website_mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  # 显式声明独立卷名，与主项目的 plantsync_mysql_data 隔离
+  plantcare_website_mysql_data:
