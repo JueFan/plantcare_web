@@ -6,9 +6,9 @@
 # ==========================================
 
 # --- 请修改以下服务器信息 ---
-SERVER_USER="root"               # 你的服务器 SSH 用户名
+SERVER_USER="ubuntu"               # 你的服务器 SSH 用户名
 SERVER_IP="43.156.136.229"        # 你的服务器公网 IP 地址或域名
-SERVER_DIR="/opt/website"        # 服务器上存放项目代码的路径
+SERVER_DIR="/home/ubuntu/website"        # 服务器上存放项目代码的路径
 # ----------------------------
 
 # 退出遇到错误
@@ -30,12 +30,12 @@ echo "✅ 数据库导出成功，已生成 init_db.sql"
 
 # 2. 检查 SSH 连接并创建目录
 echo "🔌 正在测试 SSH 连接并在服务器上创建部署目录..."
-ssh ${SERVER_USER}@${SERVER_IP} "mkdir -p ${SERVER_DIR}"
+sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "mkdir -p ${SERVER_DIR}"
 echo "✅ 目录创建成功: ${SERVER_DIR}"
 
 # 3. 上传文件到服务器 (通过 rsync 增量同步)
 echo "⬆️  正在上传项目文件到服务器..."
-rsync -avz --progress \
+sshpass -p '***REMOVED***' rsync -avz --progress \
     --exclude 'node_modules' \
     --exclude '.git' \
     --exclude '.DS_Store' \
@@ -46,7 +46,7 @@ echo "✅ 文件上传完成"
 
 # 4. 在服务器上启动 Docker
 echo "🐳 正在服务器上拉起 Docker 容器..."
-ssh ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && docker-compose down && docker-compose up -d --build"
+sshpass -p '***REMOVED***' ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} "cd ${SERVER_DIR} && docker-compose down && docker-compose up -d --build"
 
 echo ""
 echo "🎉 部署已全部完成！"
