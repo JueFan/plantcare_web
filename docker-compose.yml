@@ -35,7 +35,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-***REMOVED***}
       - MYSQL_DATABASE=rhs_data
     volumes:
-      # 如果有初始化脚本可以放在 scripts 目录下，这里先留空，或配置初始化
+      # 挂载初始化脚本：首次启动容器时会自动执行 init_db.sql 创建表和数据
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       - plantcare_website_mysql_data:/var/lib/mysql
     restart: always
 
